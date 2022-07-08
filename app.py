@@ -32,22 +32,26 @@ def seed_table():
 
 @app.route("/")
 def redirect_to_users():
+    """Redirects to the list of users."""
     return redirect("/users")
 
 
 @app.route("/users")
 def display_users():
+    """Displays the list of all users."""
     db_users = User.query.all()
     return render_template("index.html", users=db_users)
 
 
 @app.route("/users/new")
 def show_add_user_form():
+    """Displays the form for adding a new user."""
     return render_template("new_user.html")
 
 
 @app.route("/users/new", methods=["POST"])
 def add_user():
+    """Adds a new user to the database, then displays all users."""
     url = None
     if request.form.get("url") != "":
         url = request.form.get("url")
@@ -61,17 +65,20 @@ def add_user():
 
 @app.route("/users/<user_id>")
 def user_details(user_id):
+    """Displays the details of a specific user."""
     user = User.query.get_or_404(user_id)
     return render_template("user_details.html", user=user)
 
 
 @app.route("/users/<user_id>/edit")
 def show_edit_user_form(user_id):
+    """Displays the form for editing details about a user."""
     user = User.query.get_or_404(user_id)
     return render_template("edit_user.html", user=user)
 
 @app.route("/users/<user_id>/edit", methods=["POST"])
 def edit_user(user_id):
+    """Updates the edited user in the database, then displays all users."""
     user = User.query.get_or_404(user_id)
     if request.form.get("first_name") != "":
         user.first_name = request.form.get("first_name")
@@ -86,6 +93,7 @@ def edit_user(user_id):
 
 @app.route("/users/<user_id>/delete", methods=["POST"])
 def delete_user(user_id):
+    """Removes a user from the database, then displays all users."""
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
