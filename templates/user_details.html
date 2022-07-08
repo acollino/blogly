@@ -1,0 +1,20 @@
+{% extends "index.html" %} {% block title %}User Info{% endblock %} {% block
+content%}
+<div class="row m-3 align-items-center">
+  <div class="col-md-4 text-center">
+    <img src="{{user.image_url}}" class="img-fluid" style="max-height: 50vh;"/>
+  </div>
+  <div class="col-md-3 text-center">
+    <h1 class="mb-4">{{user.fullname}}</h1>
+    <form>
+      <button type="submit" class="btn btn-info" formaction="/users/{{user.id}}/edit" formmethod="get">
+        Edit
+      </button>
+      <button type="submit" class="btn btn-danger" formaction="/users/{{user.id}}/delete" formmethod="post">
+        Delete
+      </button>
+    </form>
+    <a href="/users" class="btn btn-primary mt-2">Return To Users</a>
+  </div>
+</div>
+{% endblock %}
