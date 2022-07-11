@@ -1,5 +1,8 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
+import time
+
+from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
@@ -19,8 +22,23 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(), nullable=False)
     last_name = db.Column(db.String(), default="")
-    image_url = db.Column(db.String(), default="/static/assets/default_user_profile.png")
+    image_url = db.Column(
+        db.String(), default="/static/assets/default_user_profile.png")
 
     @property
     def fullname(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Post(db.Model):
+    """Class representing a user's post in the posts table."""
+
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(), default="Post Title")
+    content = db.Column(db.String(), default="")
+    created_at = db.Column(db.DateTime, default=time.strftime("%I:%M %p on %b %d, %Y"))
+    user_id = db.Column(db.Integer, ForeignKey("User.id"))
+
+    user = db.relationship("User", backref="posts")
