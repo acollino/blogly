@@ -1,9 +1,7 @@
 """Blogly application."""
 
-from crypt import methods
 from flask import Flask, request, redirect, render_template
 from models import db, connect_db, User, Post
-from flask_debugtoolbar import DebugToolbarExtension
 import os
 
 app = Flask(__name__)
@@ -13,8 +11,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.debug = True
-
-toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 db.drop_all()
