@@ -24,6 +24,8 @@ class User(db.Model):
     last_name = db.Column(db.String(), default="")
     image_url = db.Column(
         db.String(), default="/static/assets/default_user_profile.png")
+    
+    posts = db.relationship("Post", cascade="delete")
 
     @property
     def fullname(self):
@@ -42,6 +44,6 @@ class Post(db.Model):
     title = db.Column(db.String(), default="Post Title")
     content = db.Column(db.String(), default="")
     created_at = db.Column(db.DateTime, default=time.strftime("%I:%M %p on %b %d, %Y"))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
 
-    user = db.relationship("User", backref="posts")
+    user = db.relationship("User")
