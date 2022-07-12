@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block title %}Post Details{% endblock %}
+{% block content%}
+<div class="column">
+  <h1>{{post.title}}</h1>
+  <div class="block-text">{{post.content}}</div>
+  <form>
+    <button type="submit" class="button-blue" formaction="/posts/{{post.id}}/edit" formmethod="get">
+      Edit
+    </button>
+    <button type="submit" class="button-red" formaction="/posts/{{post.id}}/delete" formmethod="post">
+      Delete
+    </button>
+  </form>
+  <a href="/users/{{post.user_id}}" class="button button-blue">Return To User</a>
+</div>
+{% endblock %}

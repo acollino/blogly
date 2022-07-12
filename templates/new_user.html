@@ -2,15 +2,25 @@
 {% block title %}Add User{% endblock %}
 
 {% block content%}
-<p class="h1 ms-5 mt-4">Add New User</p>
-<form action="/users/new" method="POST" class="ms-5 mt-3 col-sm-4">
-  <label for="first_name_input" class="form-label">First name:</label>
-  <input type="text" id="first_name_input" class="form-control mb-4" name="first_name" required>
-  <label for="last_name_input" class="form-label">Last name:</label>
-  <input type="text" id="last_name_input" class="form-control mb-4" name="last_name">
-  <label for="url_input" class="form-label">Profile picture URL:</label>
-  <input type="url" id="url_input" class="form-control mb-4" name="url">
-  <button class="btn btn-primary mt-2">Submit</button>
-  <a href="/users" class="btn btn-danger mt-2">Cancel</a>
-</form>
+<div class="column">
+  <h1>Add New User</h1>
+  <form action="/users/new" method="POST" class="column fit-form">
+    <div class="form-item-right">
+      <label for="first_name_input" class="title-section">First name:</label>
+      <input type="text" id="first_name_input" name="first_name" required>
+    </div>
+    <div class="form-item-right">
+      <label for="last_name_input" class="title-section">Last name:</label>
+      <input type="text" id="last_name_input" name="last_name">
+    </div>
+    <div class="form-item-right">
+      <label for="url_input" class="title-section">Profile picture URL:</label>
+      <input type="url" id="url_input" name="url">
+    </div>
+    <div>
+      <button class="button-blue">Submit</button>
+      <a href="/users" class="button button-red">Cancel</a>
+    </div>
+  </form>
+</div>
 {% endblock %}
