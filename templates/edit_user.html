@@ -2,21 +2,29 @@
 {% block title %}Edit User{% endblock %}
 
 {% block content%}
-<p class="h1 ms-5 mt-4">Edit User Info</p>
-<form method="POST" class="ms-5 mt-3 col-sm-4">
-  <div>Current first name: {{user.first_name}}</div>
-  <label for="first_name_input" class="form-label">New first name:</label>
-  <input type="text" id="first_name_input" class="form-control mb-4" name="first_name">
-  <div>Current last name: {{user.last_name}}</div>
-  <label for="last_name_input" class="form-label">New last name:</label>
-  <input type="text" id="last_name_input" class="form-control mb-4" name="last_name">
-  <div>
-    Current profile picture:
-    <img src="{{user.image_url}}" class="img-thumbnail ms-5" style="max-width: 25%;">
-  </div>
-  <label for="url_input" class="form-label">New picture URL:</label>
-  <input type="url" id="url_input" class="form-control mb-4" name="url">
-  <button class="btn btn-primary mt-2">Submit</button>
-  <a href="/users/{{user.id}}" class="btn btn-danger mt-2">Cancel</a>
-</form>
+<div class="column">
+  <h1>Edit User Info</h1>
+  <form method="POST" class="fit-form column">
+    <div class="form-item-right">
+      <div class="title-section">Current first name: {{user.first_name}}</div>
+      <label for="first_name_input">New first name:</label>
+      <input type="text" id="first_name_input" name="first_name">
+    </div>
+    <div class="form-item-right">
+      <div class="title-section">Current last name: {{user.last_name}}</div>
+      <label for="last_name_input">New last name:</label>
+      <input type="text" id="last_name_input" name="last_name">
+    </div>
+    <div class="form-item-right">
+      <div class="title-section">Current profile picture:</div>
+      <img src="{{user.image_url}}" class="profile-picture">
+      <label for="url_input">New picture URL:</label>
+      <input type="url" id="url_input" name="url">
+    </div>
+    <div>
+      <button class="button-blue">Submit</button>
+      <a href="/users/{{user.id}}" class="button button-red">Cancel</a>
+    </div>
+  </form>
+</div>
 {% endblock %}

@@ -27,7 +27,10 @@ class User(db.Model):
 
     @property
     def fullname(self):
-        return f"{self.first_name} {self.last_name}"
+        if self.last_name == "":
+            return self.first_name
+        else:
+            return f"{self.first_name} {self.last_name}"
 
 
 class Post(db.Model):
@@ -39,6 +42,6 @@ class Post(db.Model):
     title = db.Column(db.String(), default="Post Title")
     content = db.Column(db.String(), default="")
     created_at = db.Column(db.DateTime, default=time.strftime("%I:%M %p on %b %d, %Y"))
-    user_id = db.Column(db.Integer, ForeignKey("User.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     user = db.relationship("User", backref="posts")

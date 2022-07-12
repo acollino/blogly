@@ -17,12 +17,14 @@ app.debug = True
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+db.drop_all()
 db.create_all()
 
 
 @app.before_first_request
 def seed_table():
     User.query.delete()
+    Post.query.delete()
     seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://upload.wikimedia.org/wikipedia/commons/2/22/Snowman_in_Indiana_2014.jpg"),
                   User(first_name="Kermit", last_name="The Frog",
                        image_url="https://upload.wikimedia.org/wikipedia/en/6/62/Kermit_the_Frog.jpg"),
@@ -119,7 +121,7 @@ def add_user_post(user_id):
         "content"), user_id=user_id)
     db.session.add(post)
     db.session.commit()
-    return redirect("/users/user_id")
+    return redirect(f"/users/{user_id}")
 
 
 @app.route("/posts/<post_id>")
@@ -143,7 +145,7 @@ def edit_post(post_id):
     if request.form.get("title") != "":
         post.title = request.form.get("title")
     if request.form.get("content") != "":
-        post.title = request.form.get("content")
+        post.content = request.form.get("content")
     db.session.add(post)
     db.session.commit()
     return redirect(f"/posts/{post_id}")

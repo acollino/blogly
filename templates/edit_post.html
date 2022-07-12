@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block title %}Edit Post{% endblock %}
+
+{% block content%}
+<div class="column">
+  <h1>Edit Post Details</h1>
+  <form method="POST" class="fit-form column">
+    <div class="form-item-center">
+      <div class="title-section">Current post title: {{post.title}}</div>
+      <label for="title_input">New Post Title:</label>
+      <input type="text" id="title_input" name="title">
+    </div>
+    <div class="form-item-center">
+      <div class="title-section">Current post content:</div>
+      <div class="block-text">{{post.content}}</div>
+      <label for="content_input" class="title-section">New Post Content:</label>
+      <textarea class="text-box" id="content_input" name="content"></textarea>
+    </div>
+    <div>
+      <button class="button-blue">Submit</button>
+      <a href="/users/{{post.user_id}}" class="button button-red">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
