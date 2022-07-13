@@ -24,7 +24,7 @@ class User(db.Model):
     image_url = db.Column(
         db.String(), default="/static/assets/default_user_profile.png")
     
-    posts = db.relationship("Post", cascade="delete")
+    user_posts = db.relationship("Post", cascade="delete")
 
     @property
     def fullname(self):
