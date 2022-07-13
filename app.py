@@ -6,8 +6,8 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev_default")
-uri = os.getenv("DATABASE_URL", "postgresql:///blogly") 
-if uri.startswith("postgres://"): # since heroku uses 'postgres', not 'postgresql'
+uri = os.getenv("DATABASE_URL", "postgresql:///blogly")
+if uri.startswith("postgres://"):  # since heroku uses 'postgres', not 'postgresql'
     uri = uri.replace("postgres://", "postgresql://", 1)
 app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -16,22 +16,18 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.debug = True
 
 connect_db(app)
-# db.drop_all()
-# db.create_all()
 
 
 @app.before_first_request
 def seed_table():
-    # db.session.rollback()
-    # db.session.commit()
-    User.query.delete()
-    Post.query.delete()
-    # seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://upload.wikimedia.org/wikipedia/commons/2/22/Snowman_in_Indiana_2014.jpg"),
-    #               User(first_name="Kermit", last_name="The Frog",
-    #                    image_url="https://upload.wikimedia.org/wikipedia/en/6/62/Kermit_the_Frog.jpg"),
-    #               User(first_name="Pikachu", image_url="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png")]
-    # db.session.add_all(seed_users)
-    # db.session.commit()
+    db.drop_all()
+    db.create_all()
+    seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://cdn.pixabay.com/photo/2019/12/05/11/10/snowman-4674856_960_720.jpg"),
+                  User(first_name="Kermit", last_name="The Frog",
+                       image_url="https://cdn.pixabay.com/photo/2020/06/20/01/24/frog-5319326_960_720.jpg"),
+                  User(first_name="Santa", image_url="https://cdn.pixabay.com/photo/2017/11/20/15/38/santa-claus-2965863_960_720.jpg")]
+    db.session.add_all(seed_users)
+    db.session.commit()
 
 
 @app.route("/")
