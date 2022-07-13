@@ -2,6 +2,8 @@
 from flask_sqlalchemy import SQLAlchemy
 import time
 
+from sqlalchemy import ForeignKey
+
 
 db = SQLAlchemy()
 
@@ -23,8 +25,8 @@ class User(db.Model):
     last_name = db.Column(db.String(), default="")
     image_url = db.Column(
         db.String(), default="/static/assets/default_user_profile.png")
-    
-    user_posts = db.relationship("Post", cascade="delete")
+
+    posts = db.relationship("Post", cascade="delete", backref="user")
 
     @property
     def fullname(self):
@@ -42,7 +44,28 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(), default="Post Title")
     content = db.Column(db.String(), default="")
-    created_at = db.Column(db.DateTime, default=time.strftime("%I:%M %p on %b %d, %Y"))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
+    created_at = db.Column(
+        db.DateTime, default=time.strftime("%I:%M %p on %b %d, %Y"))
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        "users.id", ondelete="CASCADE"))
 
-    user = db.relationship("User")
+    # user = db.relationship("User")
+    tags = db.relationship("Tag", secondary="post_tags", backref="posts")
+
+
+class Tag(db.Model):
+    """Class representing a tag on a post in the tags table."""
+
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(), unique=True, nullable=False)
+
+
+class PostTag(db.Model):
+    """Class representing the post-tag pairs in the post_tags junction table."""
+
+    __tablename__ = "post_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True)
