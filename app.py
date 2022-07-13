@@ -22,16 +22,16 @@ db.create_all()
 
 @app.before_first_request
 def seed_table():
-    db.session.rollback()
-    db.session.commit()
+    # db.session.rollback()
+    # db.session.commit()
     User.query.delete()
     Post.query.delete()
-    seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://upload.wikimedia.org/wikipedia/commons/2/22/Snowman_in_Indiana_2014.jpg"),
-                  User(first_name="Kermit", last_name="The Frog",
-                       image_url="https://upload.wikimedia.org/wikipedia/en/6/62/Kermit_the_Frog.jpg"),
-                  User(first_name="Pikachu", image_url="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png")]
-    db.session.add_all(seed_users)
-    db.session.commit()
+    # seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://upload.wikimedia.org/wikipedia/commons/2/22/Snowman_in_Indiana_2014.jpg"),
+    #               User(first_name="Kermit", last_name="The Frog",
+    #                    image_url="https://upload.wikimedia.org/wikipedia/en/6/62/Kermit_the_Frog.jpg"),
+    #               User(first_name="Pikachu", image_url="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png")]
+    # db.session.add_all(seed_users)
+    # db.session.commit()
 
 
 @app.route("/")
