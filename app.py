@@ -22,6 +22,8 @@ db.create_all()
 
 @app.before_first_request
 def seed_table():
+    db.session.rollback()
+    db.session.commit()
     User.query.delete()
     Post.query.delete()
     seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://upload.wikimedia.org/wikipedia/commons/2/22/Snowman_in_Indiana_2014.jpg"),
