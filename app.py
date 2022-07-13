@@ -16,8 +16,8 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.debug = True
 
 connect_db(app)
-db.drop_all()
-db.create_all()
+# db.drop_all()
+# db.create_all()
 
 
 @app.before_first_request
