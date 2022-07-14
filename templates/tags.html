@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block title %}Tags{% endblock %}
+{% block content%}
+<div class="column">
+  <h1>Tags</h1>
+  <ul class="fit-list">
+    {% for tag in tags %}
+    <li>
+      <a href="/tags/{{tag.id}}">{{tag.name}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="/tags/new" class="button button-blue">Add Tag</a>
+  <a href="/" class="button button-green">Return Home</a>
+</div>
+{% endblock %}

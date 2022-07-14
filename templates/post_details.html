@@ -4,6 +4,13 @@
 <div class="column">
   <h1>{{post.title}}</h1>
   <div class="block-text">{{post.content}}</div>
+  <div><i>by {{post.user.fullname}} on {{post.created_at}}</i></div>
+  <div>
+    <b>Tags: </b>
+    {% for tag in post.tags %}
+    <span class="tag"><a href="/tags/{{tag.id}}">{{tag.name}}</a></span>
+    {% endfor %}
+  </div>
   <form>
     <button type="submit" class="button-blue" formaction="/posts/{{post.id}}/edit" formmethod="get">
       Edit

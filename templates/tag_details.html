@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block title %}Tag Details{% endblock %}
+{% block content%}
+<div class="column">
+  <h1>{{tag.name}}</h1>
+  <form>
+    <button type="submit" class="button-blue" formaction="/tags/{{tag.id}}/edit" formmethod="get">
+      Edit
+    </button>
+    <button type="submit" class="button-red" formaction="/tags/{{tag.id}}/delete" formmethod="post">
+      Delete
+    </button>
+  </form>
+  <a href="/tags" class="button button-blue">Return To Tags</a>
+  {% if posts|length > 0 %}
+  <ul class="fit-list">
+    {% for post in posts %}
+    <li>
+      <a href="/posts/{{post.id}}">{{post.title}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div>There are no posts tagged with {{tag.name}}!</div>
+  {% endif %}
+</div>
+{% endblock %}

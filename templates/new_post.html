@@ -13,6 +13,14 @@
       <label for="content_input" class="title-section">Post Content:</label>
       <textarea class="text-box" id="content_input" name="content"></textarea>
     </div>
+    <div class="form-item-center">
+      <div class="title-section">Tags:</div>
+      {% for tag in tags %}
+      <input type="checkbox" id="{{tag.name}}" name="tag" value="{{tag.name}}"></textarea>
+      <label for="{{tag.name}}">{{tag.name}}</label>
+      {% endfor %}
+      <a href="/tags" class="button button-green">Tags List</a>
+    </div>
     <div>
       <button class="button-blue">Submit</button>
       <a href="/users/{{user.id}}" class="button button-red">Cancel</a>

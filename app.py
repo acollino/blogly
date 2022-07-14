@@ -105,7 +105,8 @@ def delete_user(user_id):
 def show_add_post_form(user_id):
     """Shows the form to add a post for this user."""
     user = User.query.get_or_404(user_id)
-    return render_template("new_post.html", user=user)
+    tags = Tag.query.all()
+    return render_template("new_post.html", user=user, tags=tags)
 
 
 @app.route("/users/<user_id>/posts/new", methods=["POST"])
@@ -117,6 +118,9 @@ def add_user_post(user_id):
     post = Post(title=post_title, content=request.form.get(
         "content"), user_id=user_id)
     db.session.add(post)
+    db.session.commit()
+    tags = Tag.query.filter(Tag.name.in_(request.form.getlist("tag"))).all()
+    post.tags.extend(tags)
     db.session.commit()
     return redirect(f"/users/{user_id}")
 
@@ -169,7 +173,7 @@ def show_tags():
 def show_tag_details(tag_id):
     """Show the details of a tag, listing the related posts."""
     tag = Tag.query.get_or_404(tag_id)
-    posts = db.session.query(Post, Tag).join(Tag).filter(Tag.id == tag_id).all()
+    posts = db.session.query(Post).join(Post.tags).all()
     return render_template("tag_details.html", tag=tag, posts=posts)
 
 
