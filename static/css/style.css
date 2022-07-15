@@ -1,8 +1,10 @@
-html {
+body {
+  background-image: linear-gradient(rgb(95, 119, 155), rgb(53, 53, 208));
+  min-height: 100vh;
+  margin: 0;
   font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans",
     "Liberation Sans", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
-  margin: 0;
   box-sizing: border-box;
 }
 
@@ -12,7 +14,12 @@ html {
   justify-content: center;
   align-items: center;
   text-align: center;
+  gap: 1rem;
   margin: 1rem auto;
+  background-color: rgb(107, 189, 178);
+  width: fit-content;
+  padding: 1.5rem;
+  border-radius: 1rem;
 }
 
 .row {
@@ -21,6 +28,15 @@ html {
   align-items: center;
   text-align: center;
   gap: 1rem;
+}
+
+.nav-col-left {
+  width: fit-content;
+  margin: 0;
+  position: fixed;
+  left: 1rem;
+  top: 2.5rem;
+  background-color: #131a44;
 }
 
 .title-section {
@@ -81,7 +97,7 @@ button:active,
 
 .button-blue {
   color: #fff;
-  background-color: #0d6efd;
+  background-color: #0856bb;
 }
 
 .button-red {
@@ -98,6 +114,8 @@ button:active,
   max-width: min(15rem, 42vw);
   margin: 1rem auto;
   display: block;
+  border: .25rem grey solid;
+  border-radius: 0.5rem;
 }
 
 .text-box {
@@ -113,4 +131,30 @@ button:active,
   margin: 0.5rem auto;
   max-width: min(45rem, 45vw);
   white-space: pre-wrap;
+}
+
+.tag {
+  background-color: #0856bb;
+  border-radius: 0.4rem;
+  padding: 0 0.15rem 0.1rem 0.15rem;
+}
+
+.tag > a {
+  text-decoration: none;
+  color: white;
+}
+
+.title-post {
+  margin: 0;
+}
+
+.title-post > a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.home-post {
+  background-color: white;
+  padding: 1rem;
+  width: min(80vw, 30rem);
 }

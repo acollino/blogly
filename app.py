@@ -31,9 +31,11 @@ def seed_table():
 
 
 @app.route("/")
-def redirect_to_users():
-    """Redirects to the list of users."""
-    return redirect("/users")
+@app.route("/<post_offset>")
+def redirect_to_users(post_offset=0):
+    """Displays the blogly homepage."""
+    posts = Post.query.order_by(Post.created_at).offset(post_offset).limit(5)
+    return render_template("home.html", posts=posts)
 
 
 @app.route("/users")
