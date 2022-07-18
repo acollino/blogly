@@ -3,15 +3,23 @@
 
 {% block content%}
 <div class="column">
-  <h1>Add New User</h1>
+  <h1>Add New Tag</h1>
+  {% if id %}
+  <form action="/tags/new/{{id}}" method="POST" class="column fit-form">
+  {% else %}
   <form action="/tags/new" method="POST" class="column fit-form">
+  {% endif %}
     <div class="form-item-right">
       <label for="tag_name_input" class="title-section">Tag name:</label>
       <input type="text" id="tag_name_input" name="name" required>
     </div>
     <div>
       <button class="button-blue">Submit</button>
+      {% if id %}
+      <a href="/users/{{id}}/posts/new" class="button button-red">Cancel</a>
+      {% else %}
       <a href="/tags" class="button button-red">Cancel</a>
+      {% endif %}
     </div>
   </form>
 </div>

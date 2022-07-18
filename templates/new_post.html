@@ -1,9 +1,9 @@
 {% extends "index.html" %}
-{% block title %}Add User{% endblock %}
+{% block title %}Add Post{% endblock %}
 
 {% block content%}
 <div class="column">
-  <h1>Add New Post</h1>
+  <h1 class="title-heading">Add New Post</h1>
   <form action="/users/{{user.id}}/posts/new" method="POST" class="fit-form column">
     <div class="form-item-center">
       <label for="title_input" class="title-section">Post Title:</label>
@@ -13,14 +13,24 @@
       <label for="content_input" class="title-section">Post Content:</label>
       <textarea class="text-box" id="content_input" name="content"></textarea>
     </div>
+    <hr>
     <div class="form-item-center">
       <div class="title-section">Tags:</div>
-      {% for tag in tags %}
-      <input type="checkbox" id="{{tag.name}}" name="tag" value="{{tag.name}}"></textarea>
-      <label for="{{tag.name}}">{{tag.name}}</label>
-      {% endfor %}
-      <a href="/tags" class="button button-green">Tags List</a>
+      {% if tags %}
+      <div class="column-wrap margin1-top-bot">
+        {% for tag in tags %}
+        <div>
+          <input type="checkbox" id="{{tag.name}}" name="tag" value="{{tag.name}}"></textarea>
+          <label for="{{tag.name}}">{{tag.name}}</label>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div>
+        <a href="/tags/new/{{user.id}}" class="button button-green">Create Tag</a>
+      </div>
     </div>
+    <hr>
     <div>
       <button class="button-blue">Submit</button>
       <a href="/users/{{user.id}}" class="button button-red">Cancel</a>

@@ -1,36 +1,41 @@
 {% extends "index.html" %}
 {% block title %}User Info{% endblock %}
 {% block content%}
-<div class="column">
-  <div class="row">
-    <img src="{{user.image_url}}" class="profile-picture" />
-    <div>
-      <h1>{{user.fullname}}</h1>
-      <form>
-        <button type="submit" class="button-blue" formaction="/users/{{user.id}}/edit" formmethod="get">
-          Edit
-        </button>
-        <button type="submit" class="button-red" formaction="/users/{{user.id}}/delete" formmethod="post">
-          Delete
-        </button>
-      </form>
-      <a href="/users" class="button button-blue">Return To Users</a>
+<div class="column width-50">
+  <div class="padded-container">
+    <div class="row">
+      <img src="{{user.image_url}}" class="profile-picture" />
+      <div>
+        <div class="row">
+          <h1 class="title-profile">{{user.fullname}}</h1>
+          <form class="row">
+            <button type="submit" class="button-green" formaction="/users/{{user.id}}/edit" formmethod="get">
+              <img class="icon" src="/static/assets/edit.svg">
+            </button>
+            <button type="submit" class="button-red" formaction="/users/{{user.id}}/delete" formmethod="post">
+              <img class="icon" src="/static/assets/delete.svg">
+            </button>
+          </form>
+        </div>
+        <a href="/users" class="button button-blue">Return To Users</a>
+        <a href="/" class="button button-light-blue">Return Home</a>
+      </div>
     </div>
-  </div>
-  <h3>{{user.fullname}}'s Posts:</h3>
-  {% if user.posts|length > 0 %}
-  <ul class="fit-list">
-    {% for post in user.posts %}
-    <li>
-      <a href="/posts/{{post.id}}">{{post.title}}</a>
-    </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <div>{{user.fullname}} has no posts yet!</div>
-  {% endif %}
-  <div>
-    <a href="/users/{{user.id}}/posts/new" class="button button-green">Add Post</a>
+    <h3 class="title-post">{{user.fullname}}'s Posts:</h3>
+    {% if user.posts|length > 0 %}
+    <ul class="fit-list margin1-top-bot">
+      {% for post in user.posts %}
+      <li>
+        <a href="/posts/{{post.id}}">{{post.title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="block-text">{{user.fullname}} has no posts yet!</div>
+    {% endif %}
+    <div>
+      <a href="/users/{{user.id}}/posts/new" class="button button-green">Add Post</a>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -23,7 +23,7 @@ def seed_table():
     db.drop_all()
     db.create_all()
     seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://cdn.pixabay.com/photo/2019/12/05/11/10/snowman-4674856_960_720.jpg"),
-                  User(first_name="Kermit", last_name="The Frog",
+                  User(first_name="Kermit", last_name="Frog",
                        image_url="https://cdn.pixabay.com/photo/2020/06/20/01/24/frog-5319326_960_720.jpg"),
                   User(first_name="Santa", image_url="https://cdn.pixabay.com/photo/2017/11/20/15/38/santa-claus-2965863_960_720.jpg")]
     db.session.add_all(seed_users)
@@ -180,18 +180,23 @@ def show_tag_details(tag_id):
 
 
 @app.route("/tags/new")
-def show_add_tag_form():
+@app.route("/tags/new/<prior_user_id>")
+def show_add_tag_form(prior_user_id = None):
     """Shows the form to add a tag."""
-    return render_template("new_tag.html")
+    return render_template("new_tag.html", id=prior_user_id)
 
 
 @app.route("/tags/new", methods=["POST"])
-def add_tag():
+@app.route("/tags/new/<prior_user_id>", methods=["POST"])
+def add_tag(prior_user_id = None):
     """Adds the submitted tag to the database, then redirects to the tags list."""
     tag = Tag(name=request.form.get("name"))
     db.session.add(tag)
     db.session.commit()
-    return redirect("/tags")
+    if prior_user_id:
+        return redirect(f"/users/{prior_user_id}/posts/new")
+    else:
+        return redirect("/tags")
 
 
 @app.route("/tags/<tag_id>/edit")

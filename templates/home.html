@@ -6,18 +6,22 @@
     <a href="/users" class="button button-blue">User List</a>
     <a href="/tags" class="button button-blue">Tags List</a>
   </div>
-  <div class="column">
+  <div class="column width-30">
     <h1>Recent Blogly Posts</h1>
     {% for post in posts %}
     <div class="home-post">
       <h2 class="title-post"><a href="/posts/{{post.id}}">{{post.title}}</a></h2>
       <div class="block-text">{{post.content}}</div>
-      <div><i>By <a href="/users/{{post.user.id}}">{{post.user.fullname}}</a> on {{post.created_at}}</i></div>
-      <div>
+      <div><i>By <a href="/users/{{post.user.id}}">{{post.user.fullname}}</a> on {{post.created_display}}</i></div>
+      <div class="margin1-top-bot">
         <b>Tags: </b>
+        {% if post.tags %}
         {% for tag in post.tags %}
         <span class="tag"><a href="/tags/{{tag.id}}">{{tag.name}}</a></span>
         {% endfor %}
+        {% else %}
+        <span><i>No tags!</i></span>
+        {% endif %}
       </div>
     </div>
     {% endfor %}

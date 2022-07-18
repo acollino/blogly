@@ -45,12 +45,16 @@ class Post(db.Model):
     title = db.Column(db.String(), default="Post Title")
     content = db.Column(db.String(), default="")
     created_at = db.Column(
-        db.DateTime, default=time.strftime("%I:%M %p on %b %d, %Y"))
+        db.DateTime, default=db.func.now())
     user_id = db.Column(db.Integer, db.ForeignKey(
         "users.id", ondelete="CASCADE"))
 
     # user = db.relationship("User")
     tags = db.relationship("Tag", secondary="post_tags", backref="posts")
+
+    @property
+    def created_display(self):
+            return self.created_at.strftime("%I:%M %p on %b %d, %Y")
 
 
 class Tag(db.Model):

@@ -11,20 +11,22 @@
 
 <body>
   {% block content %}
-  <div class="column">
-    <h1>Users</h1>
-    <ul class="fit-list">
-      {% for user in users %}
-      <li>
-        <a href="/users/{{user.id}}">
-          {{user.first_name}} {{user.last_name}}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-    <a href="/users/new" class="button button-blue">Add User</a>
-    <a href="/tags" class="button button-green">View Tags</a>
-  </div>
+  <div class="column width-30">
+    <div class="padded-container">
+      <h1 class="title-heading">Users</h1>
+      <ul class="fit-list margin1-top-bot">
+        {% for user in users %}
+        <li>
+          <a href="/users/{{user.id}}">
+            {{user.first_name}} {{user.last_name}}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="/users/new" class="button button-green">Add User</a>
+      <a href="/" class="button button-light-blue">Return Home</a>
+    </div>
+  </div>  
   {% endblock %}
 </body>
 
