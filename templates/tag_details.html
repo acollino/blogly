@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block title %}Tag Details{% endblock %}
+{% block content%}
+<div class="column">
+  <div class="padded-container">
+    <div class="row">
+      <h1 class="title-profile">{{tag.name}}</h1>
+      <form class="row">
+        <button type="submit" class="button-green" formaction="/tags/{{tag.id}}/edit" formmethod="get">
+          <img class="icon" src="/static/assets/edit.svg">
+        </button>
+        <button type="submit" class="button-red" formaction="/tags/{{tag.id}}/delete" formmethod="post">
+          <img class="icon" src="/static/assets/delete.svg">
+        </button>
+      </form>
+    </div>
+    <a href="/tags" class="button button-blue">Return To Tags</a>
+    {% if posts|length > 0 %}
+    <ul class="fit-list margin1-top-bot">
+      {% for post in posts %}
+      <li>
+        <a href="/posts/{{post.id}}">{{post.title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="block-text">There are no posts tagged with {{tag.name}}!</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

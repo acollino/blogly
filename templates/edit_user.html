@@ -3,7 +3,7 @@
 
 {% block content%}
 <div class="column">
-  <h1>Edit User Info</h1>
+  <h1 class="title-heading">Edit User Info</h1>
   <form method="POST" class="fit-form column">
     <div class="form-item-right">
       <div class="title-section">Current first name: {{user.first_name}}</div>
@@ -17,7 +17,7 @@
     </div>
     <div class="form-item-right">
       <div class="title-section">Current profile picture:</div>
-      <img src="{{user.image_url}}" class="profile-picture">
+      <img src="{{user.image_url}}" class="profile-picture centered">
       <label for="url_input">New picture URL:</label>
       <input type="url" id="url_input" name="url">
     </div>

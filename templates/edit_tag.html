@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+{% block title %}Edit Tag{% endblock %}
+
+{% block content%}
+<div class="column">
+  <h1>Edit Tag</h1>
+  <form method="POST" class="fit-form column">
+    <div class="form-item-right">
+      <div class="title-section">Current tag name: {{tag.name}}</div>
+      <label for="tag_name_input">New tag name:</label>
+      <input type="text" id="tag_name_input" name="name">
+    </div>
+    <div>
+      <button class="button-blue">Submit</button>
+      <a href="/tags/{{tag.id}}" class="button button-red">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
