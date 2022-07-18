@@ -59,7 +59,7 @@ hr {
   left: 1rem;
   top: 2.5rem;
   gap: 1rem;
-  background-color: #131a44;
+  background-color: #080d2c;
 }
 
 .title-section {
@@ -80,15 +80,15 @@ hr {
   margin: 0;
 }
 
-.title-post:hover {
-  background-color: rgb(180, 180, 180);
-}
-
-
 .title-post > a {
   text-decoration: none;
   color: inherit;
 }
+
+.title-post > a:hover {
+  background-color: rgb(180, 180, 180);
+}
+
 
 .fit-list {
   width: fit-content;
@@ -140,22 +140,22 @@ button:active,
 
 .button-blue {
   color: #fff;
-  background-color: #0856bb;
+  background-color: #00327c;
 }
 
 .button-light-blue {
   color: #fff;
-  background-color: #0891bb;
+  background-color: #006584;
 }
 
 .button-red {
   color: #fff;
-  background-color: #eb1e1e;
+  background-color: #b30000;
 }
 
 .button-green {
   color: #fff;
-  background-color: #12921f;
+  background-color: #0b6b15;
 }
 
 .profile-picture {
@@ -188,7 +188,7 @@ button:active,
 }
 
 .tag {
-  background-color: #0856bb;
+  background-color: #00327c;
   border-radius: 0.4rem;
   padding: 0 0.15rem 0.1rem 0.15rem;
 }
