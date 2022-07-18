@@ -138,7 +138,8 @@ def show_post_details(post_id):
 def show_edit_post_form(post_id):
     """Displays the form for editing details about a post."""
     post = Post.query.get_or_404(post_id)
-    return render_template("edit_post.html", post=post)
+    tags = Tag.query.all()
+    return render_template("edit_post.html", post=post, tags=tags)
 
 
 @app.route("/posts/<post_id>/edit", methods=["POST"])
@@ -150,6 +151,9 @@ def edit_post(post_id):
     if request.form.get("content") != "":
         post.content = request.form.get("content")
     db.session.add(post)
+    db.session.commit()
+    tags = Tag.query.filter(Tag.name.in_(request.form.getlist("tag"))).all()
+    post.tags = tags
     db.session.commit()
     return redirect(f"/posts/{post_id}")
 
