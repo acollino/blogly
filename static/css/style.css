@@ -130,7 +130,7 @@ button,
 
 button:hover,
 .button:hover {
-  filter: brightness(105%);
+  filter: brightness(120%);
 }
 
 button:active,
@@ -159,7 +159,7 @@ button:active,
 }
 
 .profile-picture {
-  max-width: min(15rem, 42vw);
+  max-width: min(15rem, 23vw);
   margin: 1rem 0;
   display: block;
   border: .25rem grey solid;
@@ -169,7 +169,7 @@ button:active,
 .text-box {
   font-family: inherit;
   display: block;
-  width: min(50rem, 50vw);
+  width: min(30rem, 73vw);
   height: 5rem;
   font-size: 1rem;
 }
@@ -237,6 +237,7 @@ button:active,
   padding: 1rem;
   background-color: white;
   border-radius: 1rem;
+  max-width: 90%;
 }
 
 .icon {
@@ -249,4 +250,46 @@ button:active,
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .nav-col-left {
+    flex-direction: row;
+    left: auto;
+    width: 100%;
+    top: 0;
+    position: relative;
+    padding: 1rem 0;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 424px) {
+  html {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 425px) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) {
+  html {
+    font-size: 0.975rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1201px) {
+  html {
+    font-size: 1.025rem;
+  }
 }
