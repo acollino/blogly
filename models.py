@@ -30,6 +30,7 @@ class User(db.Model):
 
     @property
     def fullname(self):
+        """Resturns the full name of the User"""
         if self.last_name == "":
             return self.first_name
         else:
@@ -54,7 +55,8 @@ class Post(db.Model):
 
     @property
     def created_display(self):
-            return self.created_at.strftime("%I:%M %p on %b %d, %Y")
+        """Returns a more readable time for the post's creation."""
+        return self.created_at.strftime("%I:%M %p on %b %d, %Y")
 
 
 class Tag(db.Model):
