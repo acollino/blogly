@@ -179,7 +179,7 @@ def show_tags():
 def show_tag_details(tag_id):
     """Show the details of a tag, listing the related posts."""
     tag = Tag.query.get_or_404(tag_id)
-    posts = db.session.query(Post).join(Post.tags).all()
+    posts = db.session.query(Post).join(Tag, Post.tags).filter(Tag.name == tag.name).all()
     return render_template("tag_details.html", tag=tag, posts=posts)
 
 
