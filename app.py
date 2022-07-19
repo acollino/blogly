@@ -42,7 +42,7 @@ def redirect_to_users(post_offset=0): # includes offset in case of future update
 def display_users():
     """Displays the list of all users."""
     db_users = User.query.all()
-    return render_template("index.html", users=db_users)
+    return render_template("users.html", users=db_users)
 
 
 @app.route("/users/new")
