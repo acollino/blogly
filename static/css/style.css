@@ -177,8 +177,17 @@ button:active,
 .block-text {
   font-size: .9rem;
   margin: 0.5rem auto;
-  max-width: min(45rem, 45vw);
+  max-width: min(45rem, 60vw);
   white-space: pre-wrap;
+}
+
+.home-post {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-height: 40vh;
+  width: 80%;
+  margin-bottom: 1rem;
 }
 
 .home-post > .block-text {
@@ -198,16 +207,12 @@ button:active,
   color: white;
 }
 
-
-.home-post {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 1rem;
-  max-height: 40vh;
-}
-
 .width-30 {
   width: min(80vw, 30rem);
+}
+
+.width-40 {
+  width: min(80vw, 40rem);
 }
 
 .width-50 {

@@ -32,9 +32,9 @@ def seed_table():
 
 @app.route("/")
 @app.route("/<post_offset>")
-def redirect_to_users(post_offset=0):
+def redirect_to_users(post_offset=0): # includes offset in case of future updates for multiple pages
     """Displays the blogly homepage."""
-    posts = Post.query.order_by(Post.created_at).offset(post_offset).limit(5)
+    posts = Post.query.order_by(Post.created_at.desc()).offset(post_offset).limit(5)
     return render_template("home.html", posts=posts)
 
 
@@ -68,7 +68,7 @@ def add_user():
 @app.route("/users/<user_id>")
 def user_details(user_id):
     """Displays the details of a specific user."""
-    user = User.query.get_or_404(user_id) #consider using join to reduce number of SQL calls being made
+    user = User.query.get_or_404(user_id) #can also use join to reduce number of SQL calls being made
     return render_template("user_details.html", user=user)
 
 
@@ -194,9 +194,11 @@ def show_add_tag_form(prior_user_id = None):
 @app.route("/tags/new/<prior_user_id>", methods=["POST"])
 def add_tag(prior_user_id = None):
     """Adds the submitted tag to the database, then redirects to the tags list."""
-    tag = Tag(name=request.form.get("name"))
-    db.session.add(tag)
-    db.session.commit()
+    tag_exists = list(Tag.query.filter(Tag.name == request.form.get("name").title()))
+    if(bool(tag_exists) == False):
+        tag = Tag(name=request.form.get("name").title())
+        db.session.add(tag)
+        db.session.commit()
     if prior_user_id:
         return redirect(f"/users/{prior_user_id}/posts/new")
     else:
