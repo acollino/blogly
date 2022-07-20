@@ -1,8 +1,5 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
-import time
-
-from sqlalchemy import ForeignKey
 
 
 db = SQLAlchemy()
@@ -50,7 +47,6 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         "users.id", ondelete="CASCADE"))
 
-    # user = db.relationship("User")
     tags = db.relationship("Tag", secondary="post_tags", backref="posts")
 
     @property
@@ -73,5 +69,7 @@ class PostTag(db.Model):
 
     __tablename__ = "post_tags"
 
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
-    tag_id = db.Column(db.Integer, db.ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        "posts.id", ondelete="CASCADE"), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey(
+        "tags.id", ondelete="CASCADE"), primary_key=True)

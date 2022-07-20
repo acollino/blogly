@@ -1,8 +1,9 @@
 from unittest import TestCase
-from flask import session
 from app import app
-from models import db, User, Post
+from models import db, User, Post, Tag
 
+# disable the typical before first request table-seeding
+app.before_first_request_funcs = []
 
 class BloglyTests(TestCase):
 
@@ -10,6 +11,7 @@ class BloglyTests(TestCase):
         """Clear the User and Post tables before testing."""
         User.query.delete()
         Post.query.delete()
+        Tag.query.delete()
     
     def tearDown(self):
         """Remove any incomplete database transactions."""
@@ -26,7 +28,7 @@ class BloglyTests(TestCase):
         return client.post(f"/users/{test_user.id}/posts/new", data=post_data, follow_redirects=True)
 
     def test_display_users(self):
-        """Test that the index response is received correctly 
+        """Test that the users page is received correctly 
             and has the expected content."""
         with app.test_client() as client:
             resp = client.get("/users")
@@ -34,7 +36,7 @@ class BloglyTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Users", html)
-            self.assertIn(">Add User</button>", html)
+            self.assertIn(">Add User</a>", html)
     
     def test_add_user_form(self):
         """Test that the new user response is received correctly 
@@ -54,7 +56,7 @@ class BloglyTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Users", html)
-            self.assertIn(">Add User</button>", html)
+            self.assertIn(">Add User</a>", html)
             self.assertIn("Test_first Test_last", html)
     
     def test_editing_user(self):
@@ -118,7 +120,8 @@ class BloglyTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Lorem ipsum", html)
-            self.assertIn("Return To User", html)
+            self.assertIn("Test_first Test_last</a> on", html)
+            self.assertNotIn("Recent Blogly Posts", html)
     
     def test_editing_post(self):
         """Test adding a post and editing it."""
@@ -145,3 +148,28 @@ class BloglyTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Test_first Test_last has no posts yet", html)
+    
+    def test_adding_tag(self):
+        """Test adding a new tag and tagging a post."""
+        with app.test_client() as client:
+            self.add_user_and_post(client)
+            form_data = {"name":"Test_tag"}
+            client.post("/tags/new", data=form_data)
+
+            resp = client.get("/tags")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn(">Test_Tag<", html)
+
+            test_post = Post.query.filter_by(title="First Post").first()
+
+            post_data = {"title":"", "content":"", "tag":"Test_Tag"}
+            resp = client.post(f"/posts/{test_post.id}/edit", data=post_data, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("Lorem ipsum", html)
+            self.assertIn("Test_first Test_last</a> on", html)
+            self.assertIn(">Test_Tag<", html)
+            self.assertNotIn("Recent Blogly Posts", html)
