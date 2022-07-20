@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "users.html" %}
 {% block title %}Edit Post{% endblock %}
 
 {% block content%}
@@ -10,12 +10,35 @@
       <label for="title_input">New Post Title:</label>
       <input type="text" id="title_input" name="title">
     </div>
+    <hr>
     <div class="form-item-center">
       <div class="title-section">Current post content:</div>
       <div class="block-text">{{post.content}}</div>
       <label for="content_input" class="title-section">New Post Content:</label>
       <textarea class="text-box" id="content_input" name="content"></textarea>
     </div>
+    <hr>
+    <div class="form-item-center">
+      <div class="title-section">Tags:</div>
+      {% if tags %}
+      <div class="column-wrap margin1-top-bot">
+        {% for tag in tags %}
+        <div>
+          {% if tag in post.tags %}
+          <input type="checkbox" id="{{tag.name}}" name="tag" value="{{tag.name}}" checked></textarea>
+          {% else %}
+          <input type="checkbox" id="{{tag.name}}" name="tag" value="{{tag.name}}"></textarea>
+          {% endif %}
+          <label for="{{tag.name}}">{{tag.name}}</label>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div>
+        <a href="/tags/new" class="button button-green">Create Tag</a>
+      </div>
+    </div>
+    <hr>
     <div>
       <button class="button-blue">Submit</button>
       <a href="/posts/{{post.id}}" class="button button-red">Cancel</a>

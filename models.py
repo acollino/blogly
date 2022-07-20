@@ -1,8 +1,5 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
-import time
-
-from sqlalchemy import ForeignKey
 
 
 db = SQLAlchemy()
@@ -30,6 +27,7 @@ class User(db.Model):
 
     @property
     def fullname(self):
+        """Resturns the full name of the User"""
         if self.last_name == "":
             return self.first_name
         else:
@@ -49,12 +47,12 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         "users.id", ondelete="CASCADE"))
 
-    # user = db.relationship("User")
     tags = db.relationship("Tag", secondary="post_tags", backref="posts")
 
     @property
     def created_display(self):
-            return self.created_at.strftime("%I:%M %p on %b %d, %Y")
+        """Returns a more readable time for the post's creation."""
+        return self.created_at.strftime("%I:%M %p on %b %d, %Y")
 
 
 class Tag(db.Model):
@@ -71,5 +69,7 @@ class PostTag(db.Model):
 
     __tablename__ = "post_tags"
 
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
-    tag_id = db.Column(db.Integer, db.ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        "posts.id", ondelete="CASCADE"), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey(
+        "tags.id", ondelete="CASCADE"), primary_key=True)

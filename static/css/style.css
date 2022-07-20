@@ -59,7 +59,7 @@ hr {
   left: 1rem;
   top: 2.5rem;
   gap: 1rem;
-  background-color: #131a44;
+  background-color: #080d2c;
 }
 
 .title-section {
@@ -80,15 +80,15 @@ hr {
   margin: 0;
 }
 
-.title-post:hover {
-  background-color: rgb(180, 180, 180);
-}
-
-
 .title-post > a {
   text-decoration: none;
   color: inherit;
 }
+
+.title-post > a:hover {
+  background-color: rgb(180, 180, 180);
+}
+
 
 .fit-list {
   width: fit-content;
@@ -130,7 +130,7 @@ button,
 
 button:hover,
 .button:hover {
-  filter: brightness(105%);
+  filter: brightness(120%);
 }
 
 button:active,
@@ -140,26 +140,26 @@ button:active,
 
 .button-blue {
   color: #fff;
-  background-color: #0856bb;
+  background-color: #00327c;
 }
 
 .button-light-blue {
   color: #fff;
-  background-color: #0891bb;
+  background-color: #006584;
 }
 
 .button-red {
   color: #fff;
-  background-color: #eb1e1e;
+  background-color: #b30000;
 }
 
 .button-green {
   color: #fff;
-  background-color: #12921f;
+  background-color: #0b6b15;
 }
 
 .profile-picture {
-  max-width: min(15rem, 42vw);
+  max-width: min(15rem, 23vw);
   margin: 1rem 0;
   display: block;
   border: .25rem grey solid;
@@ -169,7 +169,7 @@ button:active,
 .text-box {
   font-family: inherit;
   display: block;
-  width: min(50rem, 50vw);
+  width: min(30rem, 73vw);
   height: 5rem;
   font-size: 1rem;
 }
@@ -177,8 +177,17 @@ button:active,
 .block-text {
   font-size: .9rem;
   margin: 0.5rem auto;
-  max-width: min(45rem, 45vw);
+  max-width: min(45rem, 60vw);
   white-space: pre-wrap;
+}
+
+.home-post {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-height: 40vh;
+  width: 80%;
+  margin-bottom: 1rem;
 }
 
 .home-post > .block-text {
@@ -188,7 +197,7 @@ button:active,
 }
 
 .tag {
-  background-color: #0856bb;
+  background-color: #00327c;
   border-radius: 0.4rem;
   padding: 0 0.15rem 0.1rem 0.15rem;
 }
@@ -198,16 +207,12 @@ button:active,
   color: white;
 }
 
-
-.home-post {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 1rem;
-  max-height: 40vh;
-}
-
 .width-30 {
   width: min(80vw, 30rem);
+}
+
+.width-40 {
+  width: min(80vw, 40rem);
 }
 
 .width-50 {
@@ -232,6 +237,7 @@ button:active,
   padding: 1rem;
   background-color: white;
   border-radius: 1rem;
+  max-width: 90%;
 }
 
 .icon {
@@ -244,4 +250,46 @@ button:active,
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .nav-col-left {
+    flex-direction: row;
+    left: auto;
+    width: 100%;
+    top: 0;
+    position: relative;
+    padding: 1rem 0;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 424px) {
+  html {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 425px) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) {
+  html {
+    font-size: 0.975rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1201px) {
+  html {
+    font-size: 1.025rem;
+  }
 }

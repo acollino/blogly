@@ -20,6 +20,7 @@ connect_db(app)
 
 @app.before_first_request
 def seed_table():
+    """Creates intial lists of users, tags, and posts to make examining the site easier."""
     db.drop_all()
     db.create_all()
     seed_users = [User(first_name="Jon", last_name="Snow", image_url="https://cdn.pixabay.com/photo/2019/12/05/11/10/snowman-4674856_960_720.jpg"),
@@ -28,13 +29,27 @@ def seed_table():
                   User(first_name="Santa", image_url="https://cdn.pixabay.com/photo/2017/11/20/15/38/santa-claus-2965863_960_720.jpg")]
     db.session.add_all(seed_users)
     db.session.commit()
+    seed_tags = [Tag(name="Cats"), Tag(name="Humor"), Tag(name="Serious")]
+    db.session.add_all(seed_tags)
+    db.session.commit()
+    seed_posts = [Post(title="My Cat", content="My cat is the best!", user_id=1),
+                  Post(title="Elves wanted",
+                       content="Looking for help for the holiday rush!", user_id=3),
+                  Post(title="Hello", content="My first post! Hoping to make some friends!", user_id=2)]
+    db.session.add_all(seed_posts)
+    db.session.commit()
+    seed_posts[0].tags.extend(seed_tags)
+    seed_posts[1].tags.append(seed_tags[2])
+    db.session.commit()
 
 
 @app.route("/")
 @app.route("/<post_offset>")
+# includes offset in case of future updates for multiple pages
 def redirect_to_users(post_offset=0):
     """Displays the blogly homepage."""
-    posts = Post.query.order_by(Post.created_at).offset(post_offset).limit(5)
+    posts = Post.query.order_by(
+        Post.created_at.desc()).offset(post_offset).limit(5)
     return render_template("home.html", posts=posts)
 
 
@@ -42,7 +57,7 @@ def redirect_to_users(post_offset=0):
 def display_users():
     """Displays the list of all users."""
     db_users = User.query.all()
-    return render_template("index.html", users=db_users)
+    return render_template("users.html", users=db_users)
 
 
 @app.route("/users/new")
@@ -68,7 +83,8 @@ def add_user():
 @app.route("/users/<user_id>")
 def user_details(user_id):
     """Displays the details of a specific user."""
-    user = User.query.get_or_404(user_id) #consider using join to reduce number of SQL calls being made
+    user = User.query.get_or_404(
+        user_id)  # can also use join to reduce number of SQL calls being made
     return render_template("user_details.html", user=user)
 
 
@@ -138,7 +154,8 @@ def show_post_details(post_id):
 def show_edit_post_form(post_id):
     """Displays the form for editing details about a post."""
     post = Post.query.get_or_404(post_id)
-    return render_template("edit_post.html", post=post)
+    tags = Tag.query.all()
+    return render_template("edit_post.html", post=post, tags=tags)
 
 
 @app.route("/posts/<post_id>/edit", methods=["POST"])
@@ -150,6 +167,9 @@ def edit_post(post_id):
     if request.form.get("content") != "":
         post.content = request.form.get("content")
     db.session.add(post)
+    db.session.commit()
+    tags = Tag.query.filter(Tag.name.in_(request.form.getlist("tag"))).all()
+    post.tags = tags
     db.session.commit()
     return redirect(f"/posts/{post_id}")
 
@@ -175,24 +195,31 @@ def show_tags():
 def show_tag_details(tag_id):
     """Show the details of a tag, listing the related posts."""
     tag = Tag.query.get_or_404(tag_id)
-    posts = db.session.query(Post).join(Post.tags).all()
+    posts = db.session.query(Post).join(
+        Tag, Post.tags).filter(Tag.name == tag.name).all()
     return render_template("tag_details.html", tag=tag, posts=posts)
 
 
 @app.route("/tags/new")
 @app.route("/tags/new/<prior_user_id>")
-def show_add_tag_form(prior_user_id = None):
-    """Shows the form to add a tag."""
+def show_add_tag_form(prior_user_id=None):
+    """Shows the form to add a tag. User id enables returning to a post-
+        creation form if adding a tag from that new post."""
     return render_template("new_tag.html", id=prior_user_id)
 
 
 @app.route("/tags/new", methods=["POST"])
 @app.route("/tags/new/<prior_user_id>", methods=["POST"])
-def add_tag(prior_user_id = None):
-    """Adds the submitted tag to the database, then redirects to the tags list."""
-    tag = Tag(name=request.form.get("name"))
-    db.session.add(tag)
-    db.session.commit()
+def add_tag(prior_user_id=None):
+    """Adds the submitted tag to the database, then redirects to the tags list.
+        If the tag was created from a new-post form, redirects back to the form
+        instead."""
+    tag_exists = list(Tag.query.filter(
+        Tag.name == request.form.get("name").title()))
+    if(bool(tag_exists) == False):
+        tag = Tag(name=request.form.get("name").title())
+        db.session.add(tag)
+        db.session.commit()
     if prior_user_id:
         return redirect(f"/users/{prior_user_id}/posts/new")
     else:
